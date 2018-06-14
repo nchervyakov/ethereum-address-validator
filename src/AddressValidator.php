@@ -25,14 +25,15 @@ class AddressValidator
 
     private static function validateChecksumAddress($address): int
     {
+        /** @noinspection PhpUnhandledExceptionInspection */
         $addressHash = Keccak::hash(strtolower($address), 256);
         $addressArray = str_split($address);
         $addressHashArray = str_split($addressHash);
 
         for ($i = 0; $i < 40; $i++) {
             // the nth letter should be uppercase if the nth digit of casemap is 1
-            if ((intval($addressHashArray[$i], 16) > 7 && strtoupper($addressArray[$i]) !== $addressArray[$i]) ||
-                (intval($addressHashArray[$i], 16) <= 7 && strtolower($addressArray[$i]) !== $addressArray[$i])) {
+            if ((\intval($addressHashArray[$i], 16) > 7 && strtoupper($addressArray[$i]) !== $addressArray[$i]) ||
+                (\intval($addressHashArray[$i], 16) <= 7 && strtolower($addressArray[$i]) !== $addressArray[$i])) {
                 return self::ADDRESS_CHECKSUM_INVALID;
             }
         }
@@ -47,6 +48,7 @@ class AddressValidator
         }
 
         $address = substr($address, 2);
+        /** @noinspection PhpUnhandledExceptionInspection */
         $addressHash = Keccak::hash(strtolower($address), 256);
         $addressArray = str_split($address);
         $addressHashArray = str_split($addressHash);
@@ -55,7 +57,7 @@ class AddressValidator
 
         for ($i = 0; $i < 40; $i++) {
             // the nth letter should be uppercase if the nth digit of casemap is 1
-            if (intval($addressHashArray[$i], 16) > 7) {
+            if (\intval($addressHashArray[$i], 16) > 7) {
                 $ret .= strtoupper($addressArray[$i]);
             } else /*if (intval($addressHashArray[$i], 16) <= 7)*/ {
                 $ret .= strtolower($addressArray[$i]);
