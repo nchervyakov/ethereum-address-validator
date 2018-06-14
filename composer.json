@@ -1,5 +1,5 @@
 {
-  "name": "psychob/ethereum-address-validator",
+  "name": "nchervyakov/ethereum-address-validator",
   "description": "Validate etheruem address",
   "type": "library",
   "require": {
